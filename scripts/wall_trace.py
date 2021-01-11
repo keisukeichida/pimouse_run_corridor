@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import rospy,copy
+import rospy,copy,math
 from geometry_msgs.msg import Twist
 from std_srvs.srv import Trigger, TriggerResponse
 from pimouse_ros.msg import LightSensorValues
@@ -24,7 +24,7 @@ class WallTrace():
         while not rospy.is_shutdown():
             data.linear.x += accel
 
-            if self.sensor_values.sum_all > 50:
+            if self.sensor_values.sum_forward > 50:
                 data.linear.x = 0.0
             elif data.linear.x <= 0.2:
                 data.linear.x = 0.2
